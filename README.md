@@ -7,7 +7,7 @@
 
 ### About the course:
 
-* Getting to know DrRacket
+* Getting to know DrRacket :rocket:
 * Building grammar and a new language
 * Using the PL language
 
