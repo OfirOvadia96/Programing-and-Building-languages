@@ -5,43 +5,33 @@ Question 1 - BNF:
 The LE grammer
 Sections: a , b , c
 
-  <LE> ::=   <num> (1)
-           | <sym> (2)
-           | <null> (3)
-           | { list <LE>... } (4)
-           | { append <LsE> <LsE> ... } (5)
-           | { cons <LE> <LsE> } (6) 
- <LsE> ::= {list <LE>... } (7)
-           | {cons <LE> <LsE> } (8)
-           | {append <LsE> <LsE> ... } (9)
+  <LE> ::=   <num> (i)
+           | <null> (ii)
+           | <LETTER> (iii)
+           | { list <LE>... } (iv)
+           | { append <LsE> <LsE> ... } (v)
+           | { cons <LE> <LsE> } (vi)
+           | { ' <LETTER> ... } (vii)
+ <LETTER>::= { A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+               a b c d e f g h i j k l m n o p q r s t u v w x y z} (viii)
+ <LsE> ::= {list <LE>... } (ix)
 
 
 sections 1.d:
 
 (append (list 20854 1151) (cons 'ofir null)):
-
-           (append <LsE> <LsE> ) (5)
- (list <LE> <LE>) (7)   (cons <LE> <LsE>) (8)
- <num> (1)   <num> (1)     <sym> (2)     (list <LE>) (7)
-                                            <null> (3)
-
-(cons 'ofir (list'ovadia 'granit 58)):
-
-         (cons <LE> <LsE>) (6)
-         <sym> (2)     (list <LE> <LE> <LE>) (7)
-                      <sym> (2) <sym> (2)  <num> (1) 
-
-(list 'ofir 'ovadia (cons 'age (append (list 25 'x) (cons 25 null))) :
   
-                   (list <LE> <LE> <LE>) (4)
-          <sym> (2) <sym> (2)     (cons <LE> <LsE>)
-                              <sym> (2)  (append <LsE> <LsE>) (9)
-                                     (list <LE> <LE>)(7)  (cons <LE> <LsE>) (8)
-                                   <num> (1) <sym> (2)     <num> (1)   (list <LE>) (7)
-                                                                              <null> (3)
+(cons 208 (cons (append (cons 'ofir null)(list 'ovadia 25)) null))
+  
+(null)
+  (iii)
+
+(cons 'ofir ('ovadia 'granit 58))
+ 
+
 |#
 
-;;valid expressions:
+;; need to be valid expressions:
 
 #|
 null
@@ -56,7 +46,7 @@ null
 (cons 1 (cons (append (cons 'x null) (list 'y 'z)) null)) 1 (cons (append (cons 'x null) (list 'y 'z)) null)))
 |#
 
-;;invalid expressions:
+;;need to be invalid expressions:
 
 #|
 (cons 1 2)
@@ -274,12 +264,6 @@ eval({- E1 E2}) =  eval(E1) - eval(E2)
        (Leaf (- num 1))
      )
 
-( : Bintree-square : Number -> BINTREE)
-  (define (Bintree-square num)
-    
-       (Leaf (* num num))
-     )
-
 ;;tests:
 (test (tree-map add1 (Node (Leaf 1) (Node (Leaf 2) (Leaf 3))))=> (Node (Leaf 2) (Node (Leaf 3) (Leaf 4))))
 (test (tree-map add1 (Node (Leaf 10) (Node (Leaf 11) (Leaf 12))))=> (Node (Leaf 11) (Node (Leaf 12) (Leaf 13))))
@@ -287,6 +271,3 @@ eval({- E1 E2}) =  eval(E1) - eval(E2)
 (test (tree-map Reduction1 (Node (Leaf 1) (Node (Leaf 2) (Leaf 3))))=> (Node (Leaf 0) (Node (Leaf 1) (Leaf 2))))
 (test (tree-map Reduction1 (Node (Leaf 10) (Node (Leaf 11) (Leaf 12))))=> (Node (Leaf 9) (Node (Leaf 10) (Leaf 11))))
 (test (tree-map Reduction1 (Node (Leaf 17) (Node (Leaf 18) (Leaf 19))))=> (Node (Leaf 16) (Node (Leaf 17) (Leaf 18))))
-(test (tree-map Bintree-square (Node (Leaf 1) (Node (Leaf 2) (Leaf 3))))=> (Node (Leaf 1) (Node (Leaf 4) (Leaf 9))))
-(test (tree-map Bintree-square (Node (Leaf 9) (Node (Leaf 10) (Leaf 11))))=> (Node (Leaf 81) (Node (Leaf 100) (Leaf 121))))
-(test (tree-map Bintree-square (Node (Leaf 5) (Node (Leaf 4) (Leaf -2))))=> (Node (Leaf 25) (Node (Leaf 16) (Leaf 4))))
