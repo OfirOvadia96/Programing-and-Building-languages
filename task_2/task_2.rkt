@@ -4,7 +4,6 @@
 Question 1 - BNF:
 The LE grammer
 Sections: a , b , c
-
   <LE> ::=   <num> (1)
            | <sym> (2)
            | <null> (3)
@@ -14,23 +13,16 @@ Sections: a , b , c
  <LsE> ::= {list <LE>... } (7)
            | {cons <LE> <LsE> } (8)
            | {append <LsE> <LsE> ... } (9)
-
-
 sections 1.d:
-
 (append (list 20854 1151) (cons 'ofir null)):
-
            (append <LsE> <LsE> ) (5)
  (list <LE> <LE>) (7)   (cons <LE> <LsE>) (8)
  <num> (1)   <num> (1)     <sym> (2)     (list <LE>) (7)
                                             <null> (3)
-
 (cons 'ofir (list'ovadia 'granit 58)):
-
          (cons <LE> <LsE>) (6)
          <sym> (2)     (list <LE> <LE> <LE>) (7)
                       <sym> (2) <sym> (2)  <num> (1) 
-
 (list 'ofir 'ovadia (cons 'age (append (list 25 'x) (cons 25 null))) :
   
                    (list <LE> <LE> <LE>) (4)
@@ -83,7 +75,6 @@ null
 
 #|
 The AE grammer (infix)
-
   <AE> ::= <num>
            | { <AE> + <AE> }
            | { <AE> - <AE> }
@@ -136,16 +127,12 @@ The AE grammer (infix)
 The goal of parse:
 Input:  string describing the program
 Output: Abstract Syntax Tree (or an exception if the string is not a valid program)
-
 Two main phases:
 1. Read -- turn the string into a simple data structure (we will use the Racket type Sexpr).
 2. Actual Parsing -- turn an Sexpr into an AST
-
-
 Definition of the pl type Sexpr:
 Basis -- any Number/Symbol is an Sexpr
 General -- any list of Sexpr is an Sexpr
-
 |#
 
 
@@ -155,7 +142,6 @@ General -- any list of Sexpr is an Sexpr
 ; <AE> ::= <num>               a 
 ;          | { + <AE> <AE> }   b
 ;          | { - <AE> <AE> }   c
-
 eval(<num>) = <num>
 eval({+ E1 E2}) =  eval(E1) + eval(E2)
 eval({- E1 E2}) =  eval(E1) - eval(E2)
