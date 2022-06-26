@@ -70,13 +70,15 @@ General -- any list of Sexpr is an Sexpr
     [(Sub l r) (- (eval l) (eval r))]
     [(Mul l r) (* (eval l) (eval r))]
     [(Div l r) (/ (eval l) (eval r))]
-    [(Sqr arg) (* (eval arg) (eval arg))]
-    [(Power l r) (if (eq? (isInteger (eval r))#t)  (MyPower (eval l) (eval r))  (error 'eval "power expects an integer power,got:") )]))
+    [(Sqr arg) (* (eval arg) (eval arg))] ;;mul the arg by himself
+    [(Power l r) (if (eq? (isInteger (eval r))#t)  (MyPower (eval l) (eval r))  (error 'eval "power expects an integer power,got:") )])) ;;send to other functions to get the result
 
+;;check if the number is integer; return true if yes ,else false
 (: isInteger : Number ->(U #f #t))
  (define (isInteger exp)
    (if (integer? exp) #t #f) )
 
+;;fuction that Performs the power action (multiplyed the base p times)
 (: MyPower : Number Number -> Number)
 (define (MyPower base p)
   (cond
@@ -140,8 +142,8 @@ General -- any list of Sexpr is an Sexpr
 
   )
 ;; ========== parse =============
-(: parse-sexpr->LEs : (Listof Sexpr) -> (Listof LE))
  ;; converts a list of s-expressions into a list of LEs
+(: parse-sexpr->LEs : (Listof Sexpr) -> (Listof LE))
  (define (parse-sexpr->LEs sexprs)
  (map parse-sexprLE sexprs))
 
@@ -162,13 +164,13 @@ ast
 (: parse-sexprLE : Sexpr -> LE)
 (define (parse-sexprLE sexpr)
  (match sexpr
- [(number: n) (LENum n)]
- ['null  (LENull)]
- [(symbol: s) (LEId s)]
- [(cons 'list arg) (MyList (parse-sexpr->LEs arg))]
- [(cons 'append lst) (Append (parse-sexpr->LISTs lst))]
- [(list 'cons lhs rhs) (Cons (parse-sexprLE lhs) (parse-sexpr->LIST rhs))]
- [else (error 'parsesexprLE "bad syntax in ~s" sexpr)]))
+ [(number: n) (LENum n)] ;;match LENum var
+ ['null  (LENull)] ;;match LENull var
+ [(symbol: s) (LEId s)] ;;match LEId var
+ [(cons 'list arg) (MyList (parse-sexpr->LEs arg))] ;;match MyList var
+ [(cons 'append lst) (Append (parse-sexpr->LISTs lst))] ;;match Append var
+ [(list 'cons lhs rhs) (Cons (parse-sexprLE lhs) (parse-sexpr->LIST rhs))] ;;match Cons var
+ [else (error 'parsesexprLE "bad syntax in ~s" sexpr)])) ;;error if not get match to any var
 
 
 
@@ -209,7 +211,7 @@ ast
   [(Cons l r) (let ([fst-val (evalLE r)])
                 (if (list? fst-val)
                     (cons (evalLE l) fst-val)
-                  (error 'evalLE "cons argument: expected List got:~s" fst-val)))]
+                  (error 'evalLE "cons argument: expected List got")))]
   [(Append lst) (apply append (eval-append-args lst))]
   [(LENull) null])
 (cases expr
@@ -232,10 +234,5 @@ ast
 (test (runLE "{list {cons}}") =error> "parsesexprLE: bad syntax in (cons)")
 (test (runLE "{list {cons 2 1}}") =error>"parsesexprLE: expected LIST; got")
 (test (runLE "{append {list 1 2 3} {list 4 5 6}}") => '(1 2 3 4 5 6))
-;;(test (runLE "{cons 5 6}") =error> " parsesexprLE: expected LIST; got")
-;;(test (runLE "{append 10 20}") =error> "bad syntax")
-
-
-
-
-
+(test (runLE "{cons 5 6}") =error> "expected LIST; got")
+(test (runLE "{append 10 20}") =error> "expected LIST; got")
