@@ -2,7 +2,7 @@
 
 <h3>The task contains a single rkt file:</h3>
 
-* task_1
+* task_1.rkt
 
 <h3>A program consisting of:</h3>
 max function - return the maximum number of the given numbers

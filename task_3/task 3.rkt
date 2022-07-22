@@ -209,9 +209,9 @@ ast
 (cases expr
   [(MyList lst) (map evalLE lst)]
   [(Cons l r) (let ([fst-val (evalLE r)])
-                (if (list? fst-val)
-                    (cons (evalLE l) fst-val)
-                  (error 'evalLE "cons argument: expected List got")))]
+                (cond 
+                  [(list? fst-val) (cons (evalLE l) fst-val)]))]
+           ;       (error 'evalLE "cons argument: expected List got")))]
   [(Append lst) (apply append (eval-append-args lst))]
   [(LENull) null])
 (cases expr
@@ -236,3 +236,5 @@ ast
 (test (runLE "{append {list 1 2 3} {list 4 5 6}}") => '(1 2 3 4 5 6))
 (test (runLE "{cons 5 6}") =error> "expected LIST; got")
 (test (runLE "{append 10 20}") =error> "expected LIST; got")
+(test (eval-append-args (list (MyList (list (LENum 52))) (LENum 88) (LENum 30))) =error> "evalLE: append argument: expected List got")
+(test (evalLE (LENum 2)) => 2)
