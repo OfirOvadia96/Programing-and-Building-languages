@@ -9,7 +9,7 @@
 
  <p align="center"> Getting to know DrRacket :rocket: </p>
  
- <p align="center"> Building grammar and a new language </p>
+ <p align="center"> Building grammars and new languages </p>
  
  <p align="center"> Using Racket & PL language </p>
 
