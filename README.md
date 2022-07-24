@@ -1,15 +1,17 @@
-<h1> Programing-and-Building-languages </h1>
+<h1 align="center"> Programing-and-Building-languages </h1>
 
 
-<h3> This repository contains all assignments in "Programing-and-Building-languages" course </h3>
+<h3 align="center"> This repository contains the assignments in "Programing-and-Building-languages" course </h3>
 
 <br>
 
-### About the course:
+<h3 align="center"> About the course: </h3>
 
-* Getting to know DrRacket :rocket:
-* Building grammar and a new language
-* Using the PL language
+ <p align="center"> Getting to know DrRacket :rocket: </p>
+ 
+ <p align="center"> Building grammar and a new language </p>
+ 
+ <p align="center"> Using Racket & PL language </p>
 
 <br>
 
